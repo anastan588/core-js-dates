@@ -100,14 +100,12 @@ function getNextFriday(date) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+
+function getCountDaysInMonth(month, year) {
+  const date = new Date(year, month, 1);
+  date.setDate(0);
+  return date.getDate();
 }
-// function getCountDaysInMonth(month, year) {
-//   const date = new Date(year, month + 1, 1);
-//   date.setUTCDate(0);
-//   return date.getUTCDate();
-// }
 
 /**
  * Returns the total number of days between two dates, including both the start and end dates.
