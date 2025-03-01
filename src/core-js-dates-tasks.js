@@ -100,11 +100,14 @@ function getNextFriday(date) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(month, year) {
-  const date = new Date(year, month + 1, 1);
-  date.setUTCDate(0);
-  return date.getUTCDate();
+function getCountDaysInMonth(/* month, year */) {
+  throw new Error('Not implemented');
 }
+// function getCountDaysInMonth(month, year) {
+//   const date = new Date(year, month + 1, 1);
+//   date.setUTCDate(0);
+//   return date.getUTCDate();
+// }
 
 /**
  * Returns the total number of days between two dates, including both the start and end dates.
@@ -296,35 +299,32 @@ function getQuarter(date) {
  * { start: '01-01-2024', end: '15-01-2024' }, 1, 3 => ['01-01-2024', '05-01-2024', '09-01-2024', '13-01-2024']
  * { start: '01-01-2024', end: '10-01-2024' }, 1, 1 => ['01-01-2024', '03-01-2024', '05-01-2024', '07-01-2024', '09-01-2024']
  */
-function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
-  throw new Error('Not implemented');
-}
 
-// function getWorkSchedule(period, countWorkDays, countOffDays) {
-//   let numberWorkDays = 1;
-//   let numberOffDays = 1;
-//   const [daystart, monthstart, yearstart] = period.start.split('-').map(Number);
-//   const startDay = new Date(yearstart, monthstart - 1, daystart);
-//   const [dayend, monthend, yearend] = period.end.split('-').map(Number);
-//   const endDay = new Date(yearend, monthend - 1, dayend);
-//   const result = [];
-//   for (let i = startDay; i <= endDay; i.setDate(i.getDate() + 1)) {
-//     if (numberWorkDays <= countWorkDays) {
-//       const day = i.getDate() < 10 ? `0${i.getDate()}` : i.getDate();
-//       const month =
-//         i.getMonth() + 1 < 10 ? `0${i.getMonth() + 1}` : i.getMonth() + 1;
-//       result.push(`${day}-${month}-${i.getFullYear()}`);
-//       numberWorkDays += 1;
-//     } else if (numberOffDays <= countOffDays) {
-//       numberOffDays += 1;
-//     }
-//     if (numberOffDays > countOffDays && numberWorkDays > countWorkDays) {
-//       numberWorkDays = 1;
-//       numberOffDays = 1;
-//     }
-//   }
-//   return result;
-// }
+function getWorkSchedule(period, countWorkDays, countOffDays) {
+  let numberWorkDays = 1;
+  let numberOffDays = 1;
+  const [daystart, monthstart, yearstart] = period.start.split('-').map(Number);
+  const startDay = new Date(yearstart, monthstart - 1, daystart);
+  const [dayend, monthend, yearend] = period.end.split('-').map(Number);
+  const endDay = new Date(yearend, monthend - 1, dayend);
+  const result = [];
+  for (let i = startDay; i <= endDay; i.setDate(i.getDate() + 1)) {
+    if (numberWorkDays <= countWorkDays) {
+      const day = i.getDate() < 10 ? `0${i.getDate()}` : i.getDate();
+      const month =
+        i.getMonth() + 1 < 10 ? `0${i.getMonth() + 1}` : i.getMonth() + 1;
+      result.push(`${day}-${month}-${i.getFullYear()}`);
+      numberWorkDays += 1;
+    } else if (numberOffDays <= countOffDays) {
+      numberOffDays += 1;
+    }
+    if (numberOffDays > countOffDays && numberWorkDays > countWorkDays) {
+      numberWorkDays = 1;
+      numberOffDays = 1;
+    }
+  }
+  return result;
+}
 
 /**
  * Determines whether the year in the provided date is a leap year.
